@@ -1,4 +1,4 @@
-package com.wnagJ.mymusic.model;
+package com.wnagj.lib_audio.mediaplayer.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

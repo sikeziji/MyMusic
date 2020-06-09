@@ -1,6 +1,6 @@
 package com.wnagJ.mymusic.model.friend;
 
-import com.wnagJ.mymusic.model.AudioBean;
+import com.wnagj.lib_audio.mediaplayer.model.AudioBean;
 import com.wnagJ.mymusic.model.BaseModel;
 
 import java.util.ArrayList;
