@@ -1,0 +1,61 @@
+//引入根工程下的统一版本管理文件
+apply from: this.rootProject.file('imagic.gradle')
+
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        maven {
+            url 'http://localhost:8081/repository/imagic-releases/'
+            credentials {
+                username 'admin'
+                password 'admin123'
+            }
+        }
+        maven {
+            url 'http://localhost:8081/repository/imagic-snapshots/'
+            credentials {
+                username 'admin'
+                password 'admin123'
+            }
+        }
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.1'
+        //greendao插件依赖
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+        //ARouter插件依赖
+        classpath "com.alibaba:arouter-register:1.0.2"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+        //项目自己的仓库
+        maven {
+            url 'http://localhost:8081/repository/imagic-releases/'
+            credentials {
+                username 'admin'
+                password 'admin123'
+            }
+        }
+        maven {
+            url 'http://localhost:8081/repository/imagic-snapshots/'
+            credentials {
+                username 'admin'
+                password 'admin123'
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
