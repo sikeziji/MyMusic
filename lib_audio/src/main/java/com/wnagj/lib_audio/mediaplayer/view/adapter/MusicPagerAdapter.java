@@ -45,7 +45,7 @@ public class MusicPagerAdapter extends PagerAdapter {
         ImageView imageView = rootView.findViewById(R.id.circle_view);
         container.addView(rootView);
         ImageLoaderManager.getInstance()
-                .displayImageForCircle(imageView, mAudioBeans.get(position).albumPic);
+                .displayImageForCircle(imageView, mAudioBeans.get(position % mAudioBeans.size()).albumPic);
         //只在无动化时创建
         mAnims.put(position, createAnim(rootView)); // 将动画缓存起来
         return rootView;
@@ -53,7 +53,7 @@ public class MusicPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mAudioBeans == null ? 0 : mAudioBeans.size();
+        return mAudioBeans == null ? 0 : mAudioBeans.size()+1;
     }
 
     @Override
@@ -89,6 +89,10 @@ public class MusicPagerAdapter extends PagerAdapter {
         void onPlayStatus();
 
         void onPauseStatus();
+    }
+
+    public  ArrayList<AudioBean> getAudioBeans(){
+        return mAudioBeans;
     }
 }
 

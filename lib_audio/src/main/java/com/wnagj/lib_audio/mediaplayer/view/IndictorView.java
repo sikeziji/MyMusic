@@ -73,7 +73,8 @@ public class IndictorView extends RelativeLayout implements ViewPager.OnPageChan
         mImageView = rootView.findViewById(R.id.tip_view);
         mViewPager = rootView.findViewById(R.id.view_pager);
         mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        mMusicPagerAdapter = new MusicPagerAdapter(mQueue, mContext, null);
+        mMusicPagerAdapter = new MusicPagerAdapter(
+                mQueue, mContext, null);
         mViewPager.setAdapter(mMusicPagerAdapter);
         showLoadView(false);
         //要在UI初始化完，否则会多一次listener响应
@@ -87,8 +88,14 @@ public class IndictorView extends RelativeLayout implements ViewPager.OnPageChan
 
     @Override
     public void onPageSelected(int position) {
-        //指定要播放的position
-        AudioController.getInstance().setPlayIndex(position);
+        System.out.println("position = " +position);
+        System.out.println("position  mMusicPagerAdapter.getCount() = " +(mMusicPagerAdapter.getCount() - 1));
+        if (position == mMusicPagerAdapter.getCount() -1 ){
+            AudioController.getInstance().setPlayIndex(0);
+        }else{
+            //指定要播放的position
+            AudioController.getInstance().setPlayIndex(position);
+        }
     }
 
     @Override
