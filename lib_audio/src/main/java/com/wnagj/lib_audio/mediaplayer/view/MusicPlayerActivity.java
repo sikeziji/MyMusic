@@ -34,6 +34,7 @@ import com.wnagj.lib_audio.mediaplayer.model.AudioBean;
 import com.wnagj.lib_audio.mediaplayer.utils.Utils;
 import com.wnagj.lib_common_ui.base.BaseActivity;
 import com.wnagj.lib_image_loader.app.ImageLoaderManager;
+import com.wnagj.lib_share.ShareDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -289,14 +290,13 @@ public class MusicPlayerActivity extends BaseActivity {
      * 分享慕课网给好友
      */
     private void shareMusic(String url, String name) {
-        //TODO : 等待shaeDialog组件完成
-//        ShareDialog dialog = new ShareDialog(this, false);
-//        dialog.setShareType(5);
-//        dialog.setShareTitle(name);
-//        dialog.setShareTitleUrl(url);
-//        dialog.setShareText("慕课网");
-//        dialog.setShareSite("imooc");
-//        dialog.setShareSiteUrl("http://www.imooc.com");
-//        dialog.show();
+        ShareDialog dialog = new ShareDialog(this, false);
+        dialog.setShareType(5);
+        dialog.setShareTitle(name);
+        dialog.setShareTitleUrl(url);
+        dialog.setShareText("测试");
+        dialog.setShareSite("imagic");
+        dialog.setShareSiteUrl("http://www.baidu.com");
+        dialog.show();
     }
 }
