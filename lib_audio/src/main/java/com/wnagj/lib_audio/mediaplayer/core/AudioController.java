@@ -20,7 +20,7 @@ public class AudioController {
     /**
      * 播放类型枚举
      */
-    public  enum  PlayMode{
+    public enum PlayMode {
         /**
          * 列表循环
          */
@@ -50,8 +50,6 @@ public class AudioController {
     private PlayMode mPlayMode = PlayMode.LOOP;
 
 
-
-
     public static AudioController getInstance() {
         return AudioController.SingletonHolder.instance;
     }
@@ -67,6 +65,7 @@ public class AudioController {
 
     /**
      * 添加到指定位置的音乐
+     *
      * @param index
      * @param bean
      */
@@ -78,7 +77,8 @@ public class AudioController {
     }
 
     /**
-     *查询音乐
+     * 查询音乐
+     *
      * @param bean
      * @return
      */
@@ -88,12 +88,12 @@ public class AudioController {
 
     /**
      * 加载音乐
+     *
      * @param bean
      */
-    private void load(AudioBean bean) {
+    public void load(AudioBean bean) {
         mAudioPlayer.load(bean);
     }
-
 
 
     /**
@@ -105,9 +105,22 @@ public class AudioController {
 
     /**
      * 获取下一个播放
+     *
      * @return
      */
-    private AudioBean getNextPlaying() {
+    public void getFirstLoading() {
+        if (mQueue.size() != 0) {
+            load(mQueue.get(0));
+        }
+    }
+
+
+    /**
+     * 获取下一个播放
+     *
+     * @return
+     */
+    public AudioBean getNextPlaying() {
         switch (mPlayMode) {
             case LOOP://列表循环
                 mQueueIndex = (mQueueIndex + 1) % mQueue.size();
@@ -123,6 +136,7 @@ public class AudioController {
 
     /**
      * 获取上一个播放
+     *
      * @return
      */
     private AudioBean getPreviousPlaying() {
@@ -141,6 +155,7 @@ public class AudioController {
 
     /**
      * 获取正在播放
+     *
      * @param index
      * @return
      */
@@ -149,6 +164,7 @@ public class AudioController {
         if (mQueue != null && !mQueue.isEmpty() && index >= 0 && index < mQueue.size()) {
             return mQueue.get(index);
         } else {
+            //TODO 可以做一个默认界面不进行音频播放
             throw new AudioQueueEmptyException("当前播放队列为空,请先设置播放队列.");
         }
     }
@@ -167,8 +183,14 @@ public class AudioController {
         return CustomMediaPlayer.Status.PAUSED == getStatus();
     }
 
+
+    public boolean isQueueNull() {
+        return mQueue.size() == 0;
+    }
+
     /**
      * 获取当前列表
+     *
      * @return
      */
     public ArrayList<AudioBean> getQueue() {
@@ -177,22 +199,46 @@ public class AudioController {
 
     /**
      * 设置播放队列
+     *
      * @param queue 队列
      */
     public void setQueue(ArrayList<AudioBean> queue) {
+        if (queue == null || queue.size() == 0) {
+            return;
+        }
+        if (mQueue.size() != 0) {
+            addQueue(queue, 0);
+        }
         setQueue(queue, 0);
     }
 
     /**
      * 设置播放队列并修改下标
+     *
      * @param queue
      * @param queueIndex
      */
     public void setQueue(ArrayList<AudioBean> queue, int queueIndex) {
+        mQueue.clear();
         mQueue.addAll(queue);
         mQueueIndex = queueIndex;
     }
 
+
+    /**
+     * 添加播放队列到底部，并修改下标
+     *
+     * @param queue
+     * @param queueIndex
+     */
+    public void addQueue(ArrayList<AudioBean> queue, int queueIndex) {
+        for (AudioBean mBean : queue) {
+            if (mQueue.contains(mBean)) {
+                mQueue.add(mBean);
+            }
+        }
+        mQueueIndex = queueIndex;
+    }
 
 
     /**
@@ -223,9 +269,6 @@ public class AudioController {
             }
         }
     }
-
-
-
 
 
     public void setPlayIndex(int index) {
@@ -361,10 +404,8 @@ public class AudioController {
      */
 
 
-
-
     /**
-     *  释放相关
+     * 释放相关
      */
     public void release() {
         mAudioPlayer.release();
@@ -373,13 +414,15 @@ public class AudioController {
 
 
     //插放完毕事件处理
-    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioCompleteEvent(
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAudioCompleteEvent(
             AudioCompleteEvent event) {
         next();
     }
 
     //播放出错事件处理
-    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioErrorEvent(AudioErrorEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAudioErrorEvent(AudioErrorEvent event) {
         next();
     }
     /**

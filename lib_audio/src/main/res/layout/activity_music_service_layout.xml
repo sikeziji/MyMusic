@@ -64,7 +64,7 @@
 
     </RelativeLayout>
 
-    <com.imooc.lib_audio.mediaplayer.view.IndictorView
+    <com.wnagj.lib_audio.mediaplayer.view.IndictorView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_layout" />

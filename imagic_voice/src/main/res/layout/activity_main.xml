@@ -48,16 +48,17 @@
 
         </RelativeLayout>
 
-<!--        <com.imooc.lib_audio.mediaplayer.view.BottomMusicView-->
-<!--            android:id="@+id/bottom_view"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentBottom="true" />-->
+        <com.wnagj.lib_audio.mediaplayer.view.BottomMusicView
+            android:id="@+id/bottom_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/bottom_view"
             android:layout_below="@id/title_layout" />
 
     </RelativeLayout>
@@ -215,11 +216,11 @@
 <!--                        app:tipTextSize="11sp" />-->
 <!--                </LinearLayout>-->
 
-<!--                <View-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0.5dp"-->
-<!--                    android:layout_margin="20dp"-->
-<!--                    android:background="#dddddd" />-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="20dp"
+                    android:background="#dddddd" />
 
 <!--                <com.imooc.lib_commin_ui.HornizeItemView-->
 <!--                    android:layout_width="match_parent"-->
@@ -348,54 +349,53 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="3"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="horizontal">-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="20dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:src="@mipmap/baz" />-->
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/baz" />
 
-<!--                <View-->
-<!--                    android:layout_width="6dp"-->
-<!--                    android:layout_height="match_parent" />-->
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent" />
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="夜间模式"-->
-<!--                    android:textColor="@color/color_333333"-->
-<!--                    android:textSize="15sp" />-->
-<!--            </LinearLayout>-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="夜间模式"
+                    android:textColor="@color/color_333333"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="2"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="horizontal">-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="20dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:src="@mipmap/bb1" />-->
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/bb1" />
 
-<!--                <View-->
-<!--                    android:layout_width="6dp"-->
-<!--                    android:layout_height="match_parent" />-->
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent" />
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="设置"-->
-<!--                    android:textColor="@color/color_333333"-->
-<!--                    android:textSize="15sp" />-->
-<!--            </LinearLayout>-->
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置"
+                    android:textColor="@color/color_333333"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/exit_layout"

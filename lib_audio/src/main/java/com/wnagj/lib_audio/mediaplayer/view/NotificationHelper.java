@@ -19,6 +19,11 @@ import com.wnagj.lib_audio.mediaplayer.db.GreenDaoHelper;
 import com.wnagj.lib_audio.mediaplayer.model.AudioBean;
 import com.wnagj.lib_image_loader.app.ImageLoaderManager;
 
+/**
+ *  音乐网Notification帮助类
+ *  1.完成notification的创建和初始化
+ *  2.对外提供表更新notification的方法
+ */
 public class NotificationHelper {
 
     public static final String CHANNEL_ID = "channel_id_audio";
@@ -73,6 +78,7 @@ public class NotificationHelper {
                 channel.enableVibration(false);
                 mNotificationManager.createNotificationChannel(channel);
             }
+
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(AudioHelper.getContext(), CHANNEL_ID).setContentIntent(
                             pendingIntent)
@@ -93,6 +99,7 @@ public class NotificationHelper {
         mRemoteViews = new RemoteViews(packageName, layoutId);
         mRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
         mRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
+        //判断当前音乐是否是收藏，不同状态更改不同UI
         if (null != GreenDaoHelper.selectFavourite(mAudioBean)) {
             mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_loved);
         } else {
@@ -111,8 +118,10 @@ public class NotificationHelper {
         PendingIntent playPendingIntent =
                 PendingIntent.getBroadcast(AudioHelper.getContext(), 1, playIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
+        //设置点击事件 Intent广播
         mRemoteViews.setOnClickPendingIntent(R.id.play_view, playPendingIntent);
         mRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_play_white);
+        //设置小布局的相同事件
         mSmallRemoteViews.setOnClickPendingIntent(R.id.play_view, playPendingIntent);
         mSmallRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_play_white);
 
@@ -159,9 +168,11 @@ public class NotificationHelper {
         //防止空指针crash
         mAudioBean = bean;
         if (mRemoteViews != null) {
+            //设置状态
             mRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_pause_white);
             mRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
             mRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
+            //设置动画
             ImageLoaderManager.getInstance()
                     .displayImageForNotification(AudioHelper.getContext(), mRemoteViews, R.id.image_view,
                             mNotification, NOTIFICATION_ID, mAudioBean.albumPic);
@@ -176,10 +187,12 @@ public class NotificationHelper {
             mSmallRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_pause_white);
             mSmallRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
             mSmallRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
+            //加载图片
             ImageLoaderManager.getInstance()
                     .displayImageForNotification(AudioHelper.getContext(), mSmallRemoteViews, R.id.image_view,
                             mNotification, NOTIFICATION_ID, mAudioBean.albumPic);
 
+            //更新
             mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }

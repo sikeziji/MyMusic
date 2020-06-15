@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.wnagj.lib_audio.R;
 import com.wnagj.lib_audio.mediaplayer.core.AudioController;
+import com.wnagj.lib_audio.mediaplayer.core.AudioPlayer;
 import com.wnagj.lib_audio.mediaplayer.events.AudioLoadEvent;
 import com.wnagj.lib_audio.mediaplayer.events.AudioPlayModeEvent;
 import com.wnagj.lib_audio.mediaplayer.model.AudioBean;
@@ -37,6 +38,7 @@ public class MusicListDialog extends BottomSheetDialog {
      * view
      */
     private ImageView mTipView;
+    private ImageView mDeleteView;
     private TextView mPlayModeView;
     private RecyclerView mRecyclerView;
     private MusicListAdapter mMusicListAdapter;
@@ -100,6 +102,18 @@ public class MusicListDialog extends BottomSheetDialog {
                 }
             }
         });
+
+        mDeleteView = findViewById(R.id.delete_view);
+        mDeleteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mQueue.contains(mAudioBean)) {
+                    mQueue.remove(mAudioBean);
+                }
+                updateList();
+                updatePlay();
+            }
+        });
         //更新界面
         updatePlayModeView();
         //初始化recycler
@@ -150,5 +164,27 @@ public class MusicListDialog extends BottomSheetDialog {
 
     private void updateList() {
         mMusicListAdapter.updateAdapter(mAudioBean);
+    }
+
+
+    private void  updatePlay(){
+        //判断播放列表是否为空
+        if (AudioController.getInstance().isQueueNull()){
+            return;
+        }
+        if (AudioController.getInstance().isStartState()) {
+            //默认为下一个
+            if (AudioController.getInstance().getNextPlaying() != null){
+                AudioController.getInstance().play();
+            }
+            //如果没有下一个，则从头开始播放
+            AudioController.getInstance().setPlayIndex(0);
+        }else{
+            if (AudioController.getInstance().getNextPlaying() != null){
+                AudioController.getInstance().load(AudioController.getInstance().getNextPlaying());
+            }else {
+                AudioController.getInstance().getFirstLoading();
+            }
+        }
     }
 }
